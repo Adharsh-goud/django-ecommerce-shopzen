@@ -1,0 +1,52 @@
+<nav class="navbar">
+
+    <!-- LOGO -->
+    <div class="logo">
+        <h1>Shopzen</h1>
+    </div>
+
+    <!-- SEARCH + FILTERS (HIDE IN AUTH PAGES) -->
+    {% if page_type != 'auth' %}
+    <form action="{% url 'home' %}" method="GET" class="search-box">
+        <input type="text" name="search" placeholder="Search products...">
+        <button type="submit">Search</button>
+    </form>
+
+    <div class="filters">
+        <a href="{% url 'home' %}?trending=true" class="nav-btn">Trending</a>
+        <a href="{% url 'home' %}?offer=true" class="nav-btn">Offer</a>
+    </div>
+    {% endif %}
+
+    <!-- LINKS -->
+    <div class="links">
+
+        <!-- Always visible -->
+        <a href="{% url 'home' %}">HOME</a>
+
+        <!-- MAIN PAGES ONLY -->
+        {% if page_type != 'auth' %}
+
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'cart' %}">CART({{cartproducts_count}})</a>
+                <a href="{% url 'profile' %}">PROFILE</a>
+                <a href="{% url 'logout_' %}">LOGOUT</a>
+                <a href="{% url 'orders' %}">MY ORDERS</a>
+            {% else %}
+                <a href="{% url 'login_' %}">LOGIN</a>
+            {% endif %}
+
+        {% else %}
+
+            <!-- AUTH PAGES -->
+            <a href="{% url 'login_' %}">LOGIN</a>
+
+        {% endif %}
+
+        <!-- Always visible -->
+        <a href="{% url 'support' %}">SUPPORT</a>
+        <a href="{% url 'knownus' %}">KNOWUS</a>
+
+    </div>
+
+</nav>

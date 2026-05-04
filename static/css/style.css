@@ -1,0 +1,159 @@
+/* ================= PREMIUM THEME ================= */
+:root {
+    --primary: #0b1a35;
+    --accent: #ffc107;
+    --text: #ffffff;
+}
+
+/* ================= NAVBAR ================= */
+nav {
+    background: rgba(11, 26, 53, 0.95);
+    backdrop-filter: blur(10px);
+
+    padding: 14px 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+/* ================= LOGO ================= */
+.logo h1 {
+    color: var(--accent);
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* ================= SEARCH ================= */
+.search-box {
+    display: flex;
+    align-items: center;
+
+    background: #ffffff;
+    border-radius: 10px;
+
+    overflow: hidden;
+
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.search-box input {
+    border: none;
+    outline: none;
+
+    padding: 8px 12px;
+    font-size: 13px;
+    width: 220px;
+}
+
+.search-box button {
+    background: linear-gradient(135deg, #ffc107, #ffb300);
+    border: none;
+
+    padding: 8px 14px;
+
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+
+    transition: 0.3s;
+}
+
+.search-box button:hover {
+    filter: brightness(0.95);
+}
+
+/* ================= FILTER BUTTONS ================= */
+.filters {
+    display: flex;
+    gap: 10px;
+}
+
+/* PREMIUM BUTTON */
+.nav-btn {
+    background: linear-gradient(135deg, #ffc107, #ffb300);
+    padding: 7px 14px;
+
+    border-radius: 20px;
+
+    text-decoration: none;
+    color: #000;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    transition: all 0.3s ease;
+}
+
+/* HOVER EFFECT */
+.nav-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(255,193,7,0.4);
+}
+
+/* ================= LINKS ================= */
+.links {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.links a {
+    color: var(--text);
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    padding: 6px 10px;
+    border-radius: 6px;
+
+    transition: all 0.25s ease;
+}
+
+/* LINK HOVER */
+.links a:hover {
+    background: rgba(255,255,255,0.1);
+    color: var(--accent);
+}
+
+/* ================= ACTIVE LINK (optional) ================= */
+.links a.active {
+    color: var(--accent);
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .search-box {
+        width: 100%;
+    }
+
+    .search-box input {
+        width: 100%;
+    }
+
+    .filters {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .links {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+    }
+
+    .links a {
+        width: 100%;
+    }
+}

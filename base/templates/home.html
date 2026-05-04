@@ -1,0 +1,110 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<h1 class="page-title">Home Page</h1>
+
+{% if no_match %}
+<h2 class="no-match">No Product Found ..!!</h2>
+{% endif %}
+
+<!-- CATEGORY BAR -->
+<div class="category-bar">
+
+    <a href="{% url 'home' %}" 
+       class="{% if not request.GET.cat and not trending and not offer %}active{% endif %}">
+       All
+    </a>
+
+    {% for c in category %}
+        <a href="?cat={{c}}" 
+           class="{% if request.GET.cat == c %}active{% endif %}">
+           {{c}}
+        </a>
+    {% endfor %}
+
+</div>
+
+<!-- SECTION TITLE -->
+{% if trending %}
+<h2 class="tag trending">🔥 Trending Products</h2>
+{% endif %}
+
+{% if offer %}
+<h2 class="tag offer">💸 Special Offers</h2>
+{% endif %}
+
+<!-- PRODUCT GRID -->
+<div class="product-grid">
+
+{% for i in all_product %}
+
+<div class="card">
+
+    <!-- BADGES -->
+    {% if offer %}
+        <span class="offer-badge">30% OFF</span>
+    {% elif i.discount > 0 %}
+        <span class="offer-badge">{{ i.discount }}% OFF</span>
+    {% endif %}
+
+    {% if trending and i.trending %}
+        <span class="trending-badge">🔥 Trending</span>
+    {% endif %}
+
+    <!-- IMAGE -->
+    <a href="{% url 'product_detail' i.id %}">
+        <div class="image-wrap">
+            <img src="{{ i.pimage.url }}" alt="{{ i.pname }}">
+        </div>
+    </a>
+
+    <!-- BODY -->
+    <div class="card-body">
+
+        <h3 class="title">{{ i.pname }}</h3>
+
+        <p class="desc">{{ i.pdesc }}</p>
+
+        <!-- PRICE -->
+        <div class="card-footer">
+
+            <div class="price-box">
+
+                {% if offer %}
+                    <span class="old-price">₹{{ i.price }}</span>
+                    <span class="new-price">₹{{ i.offer_price }}</span>
+                    <span class="save">Save ₹{{ i.offer_save }}</span>
+
+                {% elif i.discount > 0 %}
+                    <span class="old-price">₹{{ i.price }}</span>
+                    <span class="new-price">₹{{ i.final_price }}</span>
+                    <span class="save">Save ₹{{ i.savings }}</span>
+
+                {% else %}
+                    <span class="new-price">₹{{ i.price }}</span>
+                {% endif %}
+
+            </div>
+
+            <!-- ADD BUTTON -->
+            <a href="{% url 'addtocart' i.id %}" class="btn">
+                Add
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}

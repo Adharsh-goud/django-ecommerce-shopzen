@@ -1,0 +1,213 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.cart-page {
+  padding: 2.5rem 1rem;
+  font-family: 'Segoe UI', sans-serif;
+  background: #f4f6fb;
+}
+
+.cart-title {
+  text-align: center;
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 2rem;
+}
+
+.cart-wrapper {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+/* HEADER */
+.cart-header {
+  display: grid;
+  grid-template-columns: 40px 2fr 1fr 1fr 1.4fr 1fr 80px;
+  padding: 0.6rem 1.25rem;
+  background: #1a1a2e;
+  border-radius: 10px 10px 0 0;
+}
+
+.cart-header span {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #f5c518;
+  text-align: center;
+}
+
+.cart-header span:nth-child(2) {
+  text-align: left;
+}
+
+/* ITEM */
+.cart-item {
+  display: grid;
+  grid-template-columns: 40px 2fr 1fr 1fr 1.4fr 1fr 80px;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  background: #fff;
+  border-bottom: 1px solid #eef0f5;
+}
+
+.cart-item:hover {
+  background: #f9f9fd;
+}
+
+.col-name {
+  font-weight: 600;
+}
+
+.col-category span {
+  background: #eef0f5;
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+.col-total {
+  color: #2a7d4f;
+  font-weight: bold;
+}
+
+/* QTY */
+.qty-control {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.qty-control a {
+  width: 24px;
+  height: 24px;
+  background: #fff;
+  border: 1px solid #ddd;
+  text-align: center;
+  text-decoration: none;
+}
+
+/* REMOVE */
+.remove-btn {
+  color: red;
+  text-decoration: none;
+}
+
+/* EMPTY */
+.empty-cart {
+  text-align: center;
+  padding: 2rem;
+  background: #fff;
+}
+
+/* ✅ CART SUMMARY (MAIN FIX) */
+.cart-summary {
+  max-width: 860px;
+  margin: 20px auto;
+  background: #0b1a35;
+  color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.total-box span {
+  font-size: 13px;
+  color: #bbb;
+}
+
+.total-box h2 {
+  color: #ffc107;
+}
+
+.checkout-btn {
+  background: #ffc107;
+  color: #000;
+  padding: 10px 18px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.checkout-btn:hover {
+  background: #ffca2c;
+}
+
+.items-count {
+  font-size: 13px;
+  color: #ccc;
+}
+</style>
+
+<div class="cart-page">
+
+  <h1 class="cart-title">Your Cart</h1>
+
+  <div class="cart-wrapper">
+
+    <div class="cart-header">
+      <span>#</span>
+      <span>Product</span>
+      <span>Category</span>
+      <span>Price</span>
+      <span>Qty</span>
+      <span>Total</span>
+      <span>Del</span>
+    </div>
+
+    {% for i in cartproducts %}
+    <div class="cart-item">
+      <div>{{ forloop.counter }}</div>
+      <div class="col-name">{{ i.pname }}</div>
+      <div class="col-category"><span>{{ i.pcategory }}</span></div>
+      <div>₹{{ i.price }}</div>
+
+      <div class="qty-control">
+        <a href="{% url 'decrement' i.id %}">-</a>
+        <span>{{ i.quantity }}</span>
+        <a href="{% url 'increment' i.id %}">+</a>
+      </div>
+
+      <div class="col-total">₹{{ i.totalprice }}</div>
+
+      <div>
+        <a href="{% url 'remove' i.id %}" class="remove-btn">X</a>
+      </div>
+    </div>
+
+    {% empty %}
+    <div class="empty-cart">Your cart is empty.</div>
+    {% endfor %}
+
+  </div>
+
+  <!-- ✅ ONLY ONE SUMMARY (NO DUPLICATE TOTAL SECTION) -->
+  <div class="cart-summary">
+
+    <div class="total-box">
+      <span>Total Amount</span>
+      <h2>₹{{TA}}</h2>
+    </div>
+
+    <div class="items-count">
+      Items: {{cartproducts|length}}
+    </div>
+
+    <a href="{% url 'checkout' %}" class="checkout-btn">
+      Proceed to Checkout →
+    </a>
+
+  </div>
+
+</div>
+
+{% endblock %}

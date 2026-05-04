@@ -1,0 +1,254 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<style>
+body {
+    background: #f4f6fb;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* ===== LAYOUT ===== */
+.checkout-wrapper {
+    max-width: 1100px;
+    margin: 50px auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 25px;
+}
+
+/* ===== LEFT PANEL ===== */
+.checkout-box {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 16px;
+    border: 1px solid #eef1f6;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+}
+
+.checkout-box h2 {
+    margin-bottom: 25px;
+    color: #0b1a35;
+}
+
+/* INPUTS */
+.input-field {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    border: 1px solid #e3e7ee;
+    background: #f8fafc;
+    transition: all 0.25s ease;
+}
+
+.input-field:focus {
+    border-color: #ffc107;
+    box-shadow: 0 0 0 3px rgba(255,193,7,0.2);
+    background: #fff;
+    outline: none;
+}
+
+/* PAYMENT */
+.payment-section {
+    margin-top: 25px;
+}
+
+.payment-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid #e5e8ef;
+    background: #fafbfe;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.payment-option:hover {
+    border-color: #ffc107;
+    background: #fff;
+    transform: translateY(-2px);
+}
+
+/* HIDDEN BOXES */
+#upi-box, #card-box {
+    display: none;
+    margin-top: 10px;
+}
+
+/* BUTTON */
+.checkout-btn {
+    width: 100%;
+    margin-top: 20px;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #ffc107, #ffb300);
+    color: #000;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(255,193,7,0.4);
+    transition: all 0.3s ease;
+}
+
+.checkout-btn:hover {
+    transform: translateY(-2px);
+}
+
+/* ===== RIGHT PANEL ===== */
+.summary-box {
+    background: #0b1a35;
+    color: #fff;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+    height: fit-content;
+}
+
+.summary-box h3 {
+    margin-bottom: 15px;
+}
+
+/* ROW */
+.row {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+    font-size: 14px;
+}
+
+/* TOTAL */
+.total {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffc107;
+}
+
+/* SAVE TEXT */
+.save {
+    margin-top: 10px;
+    font-size: 13px;
+    color: #00ffae;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+    .checkout-wrapper {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+<div class="checkout-wrapper">
+
+    <!-- LEFT SIDE -->
+    <div class="checkout-box">
+
+        <h2>Checkout</h2>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <!-- USER DETAILS -->
+            <input type="text" name="name" placeholder="Full Name" class="input-field" required>
+            <textarea name="address" placeholder="Full Address" class="input-field" required></textarea>
+            <input type="text" name="phone" placeholder="Phone Number" class="input-field" required>
+
+            <!-- PAYMENT -->
+            <div class="payment-section">
+                <h3>Select Payment Method</h3>
+
+                <label class="payment-option">
+                    <input type="radio" name="payment" value="cod" checked onclick="togglePayment()">
+                    Cash on Delivery
+                </label>
+
+                <label class="payment-option">
+                    <input type="radio" name="payment" value="upi" onclick="togglePayment()">
+                    UPI (GPay / PhonePe)
+                </label>
+
+                <div id="upi-box">
+                    <input type="text" name="upi_id" placeholder="Enter UPI ID" class="input-field">
+                </div>
+
+                <label class="payment-option">
+                    <input type="radio" name="payment" value="card" onclick="togglePayment()">
+                    Credit / Debit Card
+                </label>
+
+                <div id="card-box">
+                    <input type="text" name="card_number" placeholder="Card Number" class="input-field">
+                    <input type="text" name="card_name" placeholder="Name on Card" class="input-field">
+                    <input type="text" name="expiry" placeholder="MM/YY" class="input-field">
+                    <input type="text" name="cvv" placeholder="CVV" class="input-field">
+                </div>
+            </div>
+
+            <button type="submit" class="checkout-btn">
+                Place Order & Pay ₹{{final_total}}
+            </button>
+
+        </form>
+
+    </div>
+
+    <!-- RIGHT SIDE (PRICE DETAILS) -->
+    <div class="summary-box">
+
+        <h3>Price Details</h3>
+
+        <div class="row">
+            <span>Item Total</span>
+            <span>₹{{item_total}}</span>
+        </div>
+
+        <div class="row">
+            <span>Delivery Fee</span>
+            <span>
+                {% if delivery == 0 %}
+                    FREE
+                {% else %}
+                    ₹{{delivery}}
+                {% endif %}
+            </span>
+        </div>
+
+        <div class="row">
+            <span>Platform Fee</span>
+            <span>₹{{platform}}</span>
+        </div>
+
+        <div class="row" style="color:#00ffae;">
+            <span>Special Discount</span>
+            <span>- ₹{{discount}}</span>
+        </div>
+
+        <hr>
+
+        <div class="row total">
+            <span>Total Payable</span>
+            <span>₹{{final_total}}</span>
+        </div>
+
+        <div class="save">
+            You saved ₹{{discount}}
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+function togglePayment() {
+    let val = document.querySelector('input[name="payment"]:checked').value;
+
+    document.getElementById("upi-box").style.display = (val === "upi") ? "block" : "none";
+    document.getElementById("card-box").style.display = (val === "card") ? "block" : "none";
+}
+</script>
+
+{% endblock %}

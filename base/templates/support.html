@@ -1,0 +1,265 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<style>
+body {
+    background: linear-gradient(135deg, #eef2fb, #e6ebf7);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* ===== CONTAINER ===== */
+.support-container {
+    max-width: 1150px;
+    margin: auto;
+    padding: 60px 20px;
+}
+
+/* ===== HEADER ===== */
+.support-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.support-header h1 {
+    font-size: 34px;
+    color: #0b1a35;
+    margin-bottom: 10px;
+}
+
+.support-header p {
+    color: #666;
+    font-size: 15px;
+}
+
+/* ===== GRID ===== */
+.support-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+/* ===== CARD ===== */
+.support-card {
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(15px);
+    padding: 28px;
+    border-radius: 18px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+    border: 1px solid #eef1f6;
+    transition: all 0.3s ease;
+}
+
+.support-card:hover {
+    transform: translateY(-6px);
+}
+
+/* ===== TITLES ===== */
+.support-card h3 {
+    margin-bottom: 20px;
+    color: #0b1a35;
+}
+
+/* ===== FAQ ===== */
+.faq-item {
+    margin-bottom: 12px;
+}
+
+.faq-item summary {
+    cursor: pointer;
+    font-weight: 600;
+    padding: 12px;
+    border-radius: 10px;
+    background: #f7f9fc;
+    transition: 0.3s;
+}
+
+.faq-item summary:hover {
+    background: #eef3fb;
+}
+
+.faq-item p {
+    padding: 12px;
+    font-size: 13px;
+    color: #555;
+}
+
+/* ===== CONTACT ===== */
+.contact-box p {
+    margin: 12px 0;
+    font-size: 14px;
+}
+
+.contact-highlight {
+    background: #f8fafc;
+    padding: 12px;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+/* ===== FORM ===== */
+.support-form input,
+.support-form textarea {
+    width: 100%;
+    padding: 13px;
+    margin-bottom: 14px;
+
+    border-radius: 10px;
+    border: 1px solid #e3e7ee;
+    background: #f8fafc;
+
+    font-size: 14px;
+    transition: all 0.25s ease;
+}
+
+.support-form input:focus,
+.support-form textarea:focus {
+    border-color: #ffc107;
+    box-shadow: 0 0 0 3px rgba(255,193,7,0.2);
+    background: #fff;
+    outline: none;
+}
+
+.support-form textarea {
+    resize: none;
+    height: 120px;
+}
+
+/* ===== BUTTON ===== */
+.support-btn {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 12px;
+
+    background: linear-gradient(135deg, #ffc107, #ffb300);
+    color: #000;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(255,193,7,0.3);
+}
+
+.support-btn:hover {
+    transform: translateY(-2px);
+}
+
+/* ===== TRUST STRIP ===== */
+.trust-strip {
+    margin-top: 35px;
+    display: flex;
+    gap: 15px;
+}
+
+.trust-box {
+    flex: 1;
+    background: #fff;
+    padding: 16px;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 13px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+}
+
+/* ===== FULL WIDTH ===== */
+.full-width {
+    grid-column: span 2;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+
+    .support-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full-width {
+        grid-column: span 1;
+    }
+
+    .trust-strip {
+        flex-direction: column;
+    }
+}
+</style>
+
+<div class="support-container">
+
+    <!-- HEADER -->
+    <div class="support-header">
+        <h1>Customer Support</h1>
+        <p>Need help? We're here for you 24/7.</p>
+    </div>
+
+    <div class="support-grid">
+
+        <!-- FAQ -->
+        <div class="support-card">
+            <h3>Frequently Asked Questions</h3>
+
+            <details class="faq-item">
+                <summary>Where is my order?</summary>
+                <p>Track your order from the "My Orders" section.</p>
+            </details>
+
+            <details class="faq-item">
+                <summary>How do I return a product?</summary>
+                <p>Go to your orders and select return for eligible items.</p>
+            </details>
+
+            <details class="faq-item">
+                <summary>How do I reset my password?</summary>
+                <p>Use the reset password option from login.</p>
+            </details>
+
+        </div>
+
+        <!-- CONTACT -->
+        <div class="support-card contact-box">
+            <h3>Contact Us</h3>
+
+            <div class="contact-highlight">
+                📧 support@shopzen.com
+            </div>
+
+            <div class="contact-highlight">
+                📞 +91 98765 43210
+            </div>
+
+            <div class="contact-highlight">
+                🕒 9AM – 6PM
+            </div>
+        </div>
+
+        <!-- FORM -->
+        <div class="support-card full-width">
+            <h3>Raise a Request</h3>
+
+            <form class="support-form" method="POST">
+                {% csrf_token %}
+
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <input type="text" name="subject" placeholder="Subject" required>
+                <textarea name="message" placeholder="Describe your issue..." required></textarea>
+
+                <button type="submit" class="support-btn">
+                    Submit Request
+                </button>
+            </form>
+        </div>
+
+    </div>
+
+    <!-- TRUST STRIP -->
+    <div class="trust-strip">
+        <div class="trust-box">⚡ Fast Response</div>
+        <div class="trust-box">🔒 Secure Support</div>
+        <div class="trust-box">📞 24/7 Assistance</div>
+    </div>
+
+</div>
+
+{% endblock %}

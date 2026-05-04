@@ -1,0 +1,159 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #0b1a35, #1c2f5a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+/* Card */
+.register-box {
+    width: 100%;
+    max-width: 420px;
+    padding: 35px 30px;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+    color: #fff;
+}
+
+/* Title */
+.register-box h1 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 26px;
+}
+
+/* Input group */
+.input-group {
+    position: relative;
+    margin-bottom: 18px;
+}
+
+/* Inputs */
+.input-group input {
+    width: 100%;
+    padding: 12px 10px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+}
+
+/* Labels */
+.input-group label {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    font-size: 13px;
+    color: #ccc;
+    pointer-events: none;
+    transition: 0.3s;
+}
+
+/* Floating effect */
+.input-group input:focus + label,
+.input-group input:valid + label {
+    top: -8px;
+    font-size: 11px;
+    color: #ffc107;
+}
+
+/* Focus */
+.input-group input:focus {
+    background: rgba(255,255,255,0.25);
+}
+
+/* Button */
+.register-btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    background: #ffc107;
+    color: #000;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.register-btn:hover {
+    background: #e0a800;
+}
+
+/* Footer link */
+.extra-links {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.extra-links a {
+    color: #ccc;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.extra-links a:hover {
+    color: #ffc107;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .register-box {
+        margin: 0 15px;
+        padding: 25px 20px;
+    }
+}
+</style>
+
+<div class="register-box">
+    <h1>Create Account</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="input-group">
+            <input type="text" name="username" required>
+            <label>Username</label>
+        </div>
+
+        <div class="input-group">
+            <input type="email" name="email" required>
+            <label>Email Address</label>
+        </div>
+
+        <div class="input-group">
+            <input type="text" name="first_name">
+            <label>First Name</label>
+        </div>
+
+        <div class="input-group">
+            <input type="text" name="last_name">
+            <label>Last Name</label>
+        </div>
+
+        <div class="input-group">
+            <input type="password" name="password" required>
+            <label>Password</label>
+        </div>
+
+        <button type="submit" class="register-btn">Sign Up</button>
+    </form>
+
+    <div class="extra-links">
+        <a href="{% url 'login_' %}">Already have an account? Login</a>
+    </div>
+</div>
+
+{% endblock %}

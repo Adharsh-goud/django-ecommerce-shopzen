@@ -1,0 +1,160 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #0b1a35, #1c2f5a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+/* Card */
+.profile-box {
+    width: 100%;
+    max-width: 420px;
+    padding: 35px 30px;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+    color: #fff;
+}
+
+/* Title */
+.profile-box h1 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 24px;
+}
+
+/* Input group */
+.input-group {
+    position: relative;
+    margin-bottom: 22px;
+}
+
+/* Inputs */
+.input-group input {
+    width: 100%;
+    padding: 12px 10px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+}
+
+/* Disabled field */
+.input-group input:disabled {
+    background: rgba(255,255,255,0.08);
+    color: #bbb;
+}
+
+/* Labels */
+.input-group label {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    font-size: 13px;
+    color: #ccc;
+    pointer-events: none;
+    transition: 0.3s;
+}
+
+/* Floating effect */
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+    top: -8px;
+    font-size: 11px;
+    color: #ffc107;
+}
+
+/* Focus */
+.input-group input:focus {
+    background: rgba(255,255,255,0.25);
+}
+
+/* Button */
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    background: #ffc107;
+    color: #000;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.submit-btn:hover {
+    background: #e0a800;
+}
+
+/* Back link */
+.back-link {
+    text-align: center;
+    margin-top: 18px;
+}
+
+.back-link a {
+    color: #ccc;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.back-link a:hover {
+    color: #ffc107;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .profile-box {
+        margin: 0 15px;
+        padding: 25px 20px;
+    }
+}
+</style>
+
+<div class="profile-box">
+    <h1>Update Profile</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="input-group">
+            <input type="text" value="{{request.user.username}}" disabled>
+            <label>Username</label>
+        </div>
+
+        <div class="input-group">
+            <input type="text" name="fname" value="{{request.user.first_name}}" required>
+            <label>First Name</label>
+        </div>
+
+        <div class="input-group">
+            <input type="text" name="lname" value="{{request.user.last_name}}" required>
+            <label>Last Name</label>
+        </div>
+
+        <div class="input-group">
+            <input type="email" name="email" value="{{request.user.email}}" required>
+            <label>Email</label>
+        </div>
+
+        <button type="submit" class="submit-btn">Save Changes</button>
+    </form>
+
+    <div class="back-link">
+        <a href="{% url 'profile' %}">Back to Profile</a>
+    </div>
+</div>
+
+{% endblock %}

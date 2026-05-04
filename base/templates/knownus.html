@@ -1,0 +1,221 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+
+
+<style>
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f4f6fb;
+}
+
+/* Container */
+.about-container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 40px 20px;
+}
+
+/* Hero */
+.about-hero {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.about-hero h1 {
+    font-size: 32px;
+    color: #0b1a35;
+    margin-bottom: 10px;
+}
+
+.about-hero p {
+    color: #666;
+    font-size: 15px;
+}
+
+/* Sections */
+.about-section {
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+}
+
+.about-section h2 {
+    color: #0b1a35;
+    margin-bottom: 10px;
+}
+
+/* Grid */
+.about-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+/* Cards */
+.about-card {
+    background: #f9fbff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.about-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Icons (simple circle style) */
+.icon {
+    width: 50px;
+    height: 50px;
+    background: #ffc107;
+    border-radius: 50%;
+    margin: 0 auto 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+/* Stats */
+.stats {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.stats div {
+    font-size: 18px;
+    font-weight: bold;
+    color: #0b1a35;
+}
+
+.stats span {
+    display: block;
+    font-size: 13px;
+    color: #666;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .about-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stats {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
+</style>
+
+<div class="about-container">
+
+    <!-- Hero -->
+    <div class="about-hero">
+        <h1>About Shopzen</h1>
+        <p>Your trusted destination for quality products and seamless shopping experience.</p>
+    </div>
+
+    <!-- Story -->
+    <div class="about-section">
+        <h2>Our Story</h2>
+        <p>
+            Shopzen was created to simplify online shopping by bringing quality products,
+            trusted sellers, and smooth user experience into one platform. 
+            We focus on delivering value, speed, and reliability to every customer.
+        </p>
+    </div>
+
+    <!-- Mission -->
+    <div class="about-section">
+        <h2>Our Mission</h2>
+        <p>
+            To make online shopping simple, affordable, and enjoyable for everyone.
+            We aim to provide top-quality products with fast delivery and excellent support.
+        </p>
+    </div>
+
+    <!-- Why choose us -->
+    <div class="about-section">
+        <h2>Why Choose Us</h2>
+
+        <div class="about-grid">
+            <div class="about-card">
+                <div class="icon">✓</div>
+                <h4>Quality Products</h4>
+                <p>We ensure only the best products reach our customers.</p>
+            </div>
+
+            <div class="about-card">
+                <div class="icon">⚡</div>
+                <h4>Fast Delivery</h4>
+                <p>Quick and reliable shipping across all locations.</p>
+            </div>
+
+            <div class="about-card">
+                <div class="icon">💬</div>
+                <h4>24/7 Support</h4>
+                <p>We are always here to help you anytime.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="about-section">
+        <h2>Our Impact</h2>
+
+        <div class="stats">
+            <div>10K+ <span>Customers</span></div>
+            <div>500+ <span>Products</span></div>
+            <div>4.8⭐ <span>Rating</span></div>
+        </div>
+    </div>
+
+    <div class="about-section">
+    <h2>Founder</h2>
+
+    <div style="display:flex; align-items:center; gap:20px; flex-wrap:wrap;">
+        
+        <!-- Avatar -->
+        <div style="
+            width:80px;
+            height:80px;
+            border-radius:50%;
+            background:#0b1a35;
+            color:#ffc107;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:26px;
+            font-weight:bold;
+        ">
+            A
+        </div>
+
+        <!-- Info -->
+        <div>
+            <h3 style="margin:0; color:#0b1a35;">Adharsh Goud</h3>
+            <p style="margin:5px 0; color:#555;">
+                Founder & Developer of Shopzen
+            </p>
+            <p style="font-size:13px; color:#777;">
+                Designed and developed this platform to deliver a modern, reliable, and seamless eCommerce experience.
+            </p>
+        </div>
+
+    </div>
+</div>
+
+<div style="text-align:center; margin-top:20px; font-size:13px; color:#777;">
+    © 2026 Shopzen. All rights reserved. Built by Adharsh Goud.
+</div>
+
+</div>
+
+{% endblock %}

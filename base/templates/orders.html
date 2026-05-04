@@ -1,0 +1,221 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<style>
+body {
+    background: #f4f6fb;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* ===== CONTAINER ===== */
+.orders-container {
+    max-width: 950px;
+    margin: 50px auto;
+    padding: 10px;
+}
+
+/* TITLE */
+.orders-title {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #0b1a35;
+}
+
+/* ===== ORDER CARD ===== */
+.order-card {
+    background: #ffffff;
+    border-radius: 16px;
+    margin-bottom: 25px;
+    overflow: hidden;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    border: 1px solid #eef1f6;
+}
+
+/* HEADER */
+.order-header {
+    background: #0b1a35;
+    color: #fff;
+    padding: 18px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* HEADER LEFT */
+.order-info {
+    font-size: 14px;
+}
+
+/* STATUS BADGE */
+.status {
+    background: rgba(255,255,255,0.15);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+}
+
+/* BODY */
+.order-body {
+    padding: 18px 20px;
+}
+
+/* PRODUCT ROW */
+.product-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.product-row:last-child {
+    border-bottom: none;
+}
+
+/* PRODUCT NAME */
+.product-name {
+    font-weight: 600;
+    color: #222;
+}
+
+/* QTY */
+.product-qty {
+    font-size: 13px;
+    color: #555;
+}
+
+/* PRICE */
+.product-price {
+    font-weight: bold;
+    color: #0b1a35;
+}
+
+/* FOOTER */
+.order-footer {
+    background: #f8f9fc;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* TOTAL */
+.total {
+    font-weight: bold;
+    color: #0b1a35;
+}
+
+/* DELIVERY INFO */
+.delivery {
+    font-size: 13px;
+    color: #666;
+}
+
+/* EMPTY */
+.empty-box {
+    text-align: center;
+    padding: 40px;
+    background: #fff;
+    border-radius: 12px;
+}
+
+/* BUTTON */
+.shop-btn {
+    margin-top: 15px;
+    display: inline-block;
+    padding: 10px 18px;
+    background: #ffc107;
+    color: #000;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.shop-btn:hover {
+    background: #ffca2c;
+}
+
+/* HOVER EFFECT */
+.order-card:hover {
+    transform: translateY(-4px);
+    transition: 0.3s;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+    .order-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .order-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+}
+</style>
+
+<div class="orders-container">
+
+    <h2 class="orders-title">📦 My Orders</h2>
+
+    {% for o in orders %}
+
+    <div class="order-card">
+
+        <!-- HEADER -->
+        <div class="order-header">
+            <div class="order-info">
+                📅 {{ o.created_at|date:"d M Y" }} <br>
+                🧾 Order ID: #{{ o.id }}
+            </div>
+
+            <div class="status">
+                ⏳ On the way
+            </div>
+        </div>
+
+        <!-- BODY -->
+        <div class="order-body">
+
+            <div class="product-row">
+                <div>
+                    <div class="product-name">{{ o.pname }}</div>
+                    <div class="product-qty">Qty: {{ o.quantity }}</div>
+                </div>
+
+                <div class="product-price">
+                    ₹{{ o.totalprice }}
+                </div>
+            </div>
+
+        </div>
+
+        <!-- FOOTER -->
+        <div class="order-footer">
+            <div class="delivery">
+                🚚 Expected Delivery: {{ o.created_at|date:"d M Y" }}
+            </div>
+
+            <div class="total">
+                Total: ₹{{ o.totalprice }}
+            </div>
+        </div>
+
+    </div>
+
+    {% empty %}
+
+    <div class="empty-box">
+        <h3>No orders yet</h3>
+        <p>Start shopping to see your orders here.</p>
+        <a href="{% url 'home' %}" class="shop-btn">Continue Shopping</a>
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}
